@@ -1,19 +1,43 @@
-# Digital Haus — Countdown & Calendar Studio
+# Digital Haus — Countdown & Calendar Studio (v3)
 
-Web builder (installable PWA) for beautiful Canva-ready countdown and calendar widgets.
+Builder satu halaman untuk membuat countdown & kalender yang siap dipakai di Canva. v3 menambahkan **link Embed untuk Canva** (cara yang sama seperti TickCounter) dan fitur kustomisasi ala TickCounter.
 
-## Cara pakai
-1. Buka `index.html` melalui browser untuk mencoba builder.
-2. Pilih **Countdown** atau **Calendar**, lalu isi tanggal, teks, warna, dan gaya.
-3. Tekan **Copy ke Canva**, paste di editor Canva. Jika copy gambar tidak diizinkan browser, builder otomatis mengunduh PNG transparan. Gunakan **Uploads → Upload files** di Canva.
-4. Countdown PNG hanyalah *snapshot* (tidak bergerak). Untuk hitung mundur langsung, tekan **Live Widget HTML**, upload file HTML hasil ekspor ke hosting HTTPS yang menghasilkan URL publik, lalu coba **Canva → Apps → Embed** dan masukkan URL. Dukungan URL/jenis desain bergantung Canva.
-5. Pada Calendar Builder, tersedia juga file `.ics` dan tombol Google Calendar.
+## Mulai cepat
+1. Ekstrak ZIP dan buka **index.html** di Chrome / browser lain.
+2. Pilih Countdown atau Calendar, isi tanggal, jam, dan zona waktu.
+3. Atur tema, warna, font, satuan waktu, background, dll.
 
-## Deploy
-Upload seluruh isi folder ini ke GitHub Pages, Netlify, atau hosting statis lainnya. Lalu bagikan URL hasil hostingnya. File `manifest.webmanifest` dan `sw.js` memungkinkan pemasangan sebagai web app (PWA) di browser yang mendukung. Browser biasanya membutuhkan HTTPS untuk fitur clipboard dan instalasi PWA.
+## Cara memasukkan countdown BERGERAK ke Canva
+Canva tidak bisa menjalankan countdown dari gambar PNG atau HTML mentah yang di-paste. Satu-satunya cara agar angkanya jalan adalah lewat **link Embed**:
 
-## Catatan
-- Tidak ada akun / database / backend; data desain disimpan di browser perangkat.
-- Font Google akan menggunakan fallback bawaan perangkat bila offline.
-- Tanggal/jam event memakai zona waktu perangkat saat widget HTML diekspor (widget timer menyimpan waktu UTC absolut, sehingga benar pada browser tamu di zona waktu berbeda).
-- Widget HTML terpisah perlu dihosting pada URL publik untuk percobaan embed di Canva. Menyalin HTML mentah ke Canva tidak didukung.
+1. **Hosting sekali saja.** Buka `app.netlify.com/drop`, tarik folder builder ini ke halaman itu (buat akun gratis supaya situsnya permanen). GitHub Pages / Cloudflare Pages juga bisa.
+2. Tempel alamat situsnya (mis. `https://nama-kamu.netlify.app/`) di kolom **Alamat builder** — tersimpan otomatis.
+3. Atur desain, lalu klik **Copy ke Canva — countdown bergerak**.
+4. Di Canva: **Apps → Embed** → paste link → **Add to design**.
+
+Tombol lain: **Share link**, **Embed code (iframe)** untuk website, **Buka share link** untuk mengetes. Countdown tampil bergerak saat desain Canva dipublikasikan sebagai website / dipresentasikan / dibuka lewat link; desain yang di-download sebagai PNG/PDF/video hanya menampilkan angka saat itu.
+
+**Copy gambar PNG** tetap tersedia untuk gambar diam (kalender, atau snapshot countdown).
+
+## Fitur countdown (ala TickCounter)
+- Zona waktu acara (WIB/WITA/WIT dan zona dunia) — semua penonton melihat hitungan yang sama
+- Jam sampai detik
+- Satuan waktu bebas: tahun, bulan, minggu, hari, jam, menit, detik
+- Arah tampilan horizontal / vertikal (vertikal cocok untuk desain portrait)
+- Bahasa label & tanggal: English, Indonesia, Melayu, Español, Français, Deutsch, Português, Italiano
+- Warna judul, angka, satuan terakhir, dan border + tebal border
+- 12 background gradasi (juga di PNG & widget)
+- Saat waktu habis: berhenti di nol / hitung naik (count-up) / ulangi tiap N detik–tahun, plus teks selesai
+- Link opsional saat countdown diklik
+- 8 font, tampil/sembunyikan tiap teks, 3 gaya angka (Cards, Clean, Pills)
+
+## Bonus
+- Calendar Builder: ekspor **.ICS** dan link Google Calendar.
+- Pengaturan tersimpan lokal di browser (`localStorage`).
+- Bisa dipasang sebagai web app (PWA). Setelah upload versi baru, refresh paksa agar service worker (v3) aktif.
+- Font Google memakai font cadangan bila perangkat offline.
+
+## Catatan teknis
+- Link widget memuat seluruh pengaturan di URL (±1.100 karakter), tanpa server atau database. Perubahan desain = salin link baru.
+- Halaman widget membangun tampilannya dengan `textContent` dan memvalidasi warna, URL, dan zona waktu, jadi input berbahaya tidak dieksekusi.
+- v3 memperbaiki bug v2: link live sebelumnya menampilkan sisa tampilan builder di belakang widget.
